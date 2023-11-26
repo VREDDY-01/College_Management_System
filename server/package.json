@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A College ERP system is a technology-based software to store, analyze, manage, and supervise the data. It also helps in smoother operations and better internal communication alongside maintaining transparency. For instance, a College ERP System will manage the data related to their students.A College ERP system is a technology-based software to store, analyze, manage, and supervise the data. It also helps in smoother operations and better internal communication alongside maintaining transparency. For instance, a College ERP System will manage the data related to their students.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "vishnu",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.1",
+    "nodemon": "^3.0.1"
+  }
+}
