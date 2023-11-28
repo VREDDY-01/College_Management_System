@@ -1,4 +1,5 @@
 import Admin from "../models/admin.js";
+import Department from "../models/department.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -111,13 +112,8 @@ export const getAdmin = async (req, res) => {
 
 export const deleteAdmin = async (req, res) => {
   try {
-    const admins = req.body;
-    const errors = { noAdminError: String };
-    for (var i = 0; i < admins.length; i++) {
-      var admin = admins[i];
-   
-      await Admin.findOneAndDelete({ _id: admin });
-    }
+    const admin = req.body;
+    await Admin.findOneAndDelete({ _id: admin.admin });
     res.status(200).json({ message: "Admin Deleted" });
   } catch (error) {
     const errors = { backendError: String };
@@ -132,6 +128,129 @@ export const getAllAdmin = async (req, res) => {
     res.status(200).json(admins);
   } catch (error) {
     console.log("Backend Error", error);
+  }
+};
+
+export const updateAdmin = async (req, res) => {
+  try {
+    const { name, dob, department, contactNumber, avatar, email } = req.body;
+    const updatedAdmin = await Admin.findOne({ email });
+    if (name) {
+      updatedAdmin.name = name;
+      await updatedAdmin.save();
+    }
+    if (dob) {
+      updatedAdmin.dob = dob;
+      await updatedAdmin.save();
+    }
+    if (department) {
+      updatedAdmin.department = department;
+      await updatedAdmin.save();
+    }
+    if (contactNumber) {
+      updatedAdmin.contactNumber = contactNumber;
+      await updatedAdmin.save();
+    }
+    if (avatar) {
+      updatedAdmin.avatar = avatar;
+      await updatedAdmin.save();
+    }
+    res.status(200).json(updatedAdmin);
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const updatedPassword = async (req, res) => {
+  try {
+    const { newPassword, confirmPassword, email } = req.body;
+    const errors = { mismatchError: String };
+    if (newPassword !== confirmPassword) {
+      errors.mismatchError =
+        "Your password and confirmation password do not match";
+      return res.status(400).json(errors);
+    }
+
+    const admin = await Admin.findOne({ email });
+    let hashedPassword;
+    hashedPassword = await bcrypt.hash(newPassword, 10);
+    admin.password = hashedPassword;
+    await admin.save();
+    if (admin.passwordUpdated === false) {
+      admin.passwordUpdated = true;
+      await admin.save();
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Password updated successfully",
+      response: admin,
+    });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const addDepartment = async (req, res) => {
+  try {
+    const errors = { departmentError: String };
+    const { department } = req.body;
+    const existingDepartment = await Department.findOne({ department });
+    if (existingDepartment) {
+      errors.departmentError = "Department already added";
+      return res.status(400).json(errors);
+    }
+    const departments = await Department.find({});
+    let add = departments.length + 1;
+    let departmentCode;
+    if (add < 9) {
+      departmentCode = "0" + add.toString();
+    } else {
+      departmentCode = add.toString();
+    }
+
+    const newDepartment = await new Department({
+      department,
+      departmentCode,
+    });
+
+    await newDepartment.save();
+    return res.status(200).json({
+      success: true,
+      message: "Department added successfully",
+      response: newDepartment,
+    });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const getAllDepartment = async (req, res) => {
+  try {
+    const departments = await Department.find();
+    res.status(200).json(departments);
+  } catch (error) {
+    console.log("Backend Error", error);
+  }
+};
+
+export const deleteDepartment = async (req, res) => {
+  try {
+    const { department } = req.body;
+
+    await Department.findOneAndDelete(department);
+
+    res.status(200).json({ message: "Department Deleted" });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
   }
 };
 
