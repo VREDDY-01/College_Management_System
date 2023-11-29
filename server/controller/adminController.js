@@ -1,5 +1,6 @@
 import Admin from "../models/admin.js";
 import Department from "../models/department.js";
+import Faculty from "../models/faculty.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -254,3 +255,110 @@ export const deleteDepartment = async (req, res) => {
   }
 };
 
+export const addFaculty = async (req, res) => {
+  try {
+    const {
+      name,
+      dob,
+      department,
+      contactNumber,
+      avatar,
+      email,
+      joiningYear,
+      gender,
+      designation,
+    } = req.body;
+    const errors = { emailError: String };
+    const existingFaculty = await Faculty.findOne({ email });
+    if (existingFaculty) {
+      errors.emailError = "Email already exists";
+      return res.status(400).json(errors);
+    }
+    const existingDepartment = await Department.findOne({ department });
+    let departmentHelper = existingDepartment.departmentCode;
+
+    const faculties = await Faculty.find({ department });
+    let helper;
+    if (faculties.length < 10) {
+      helper = "00" + faculties.length.toString();
+    } else if (faculties.length < 100 && faculties.length > 9) {
+      helper = "0" + faculties.length.toString();
+    } else {
+      helper = faculties.length.toString();
+    }
+    var date = new Date();
+    var components = ["FAC", date.getFullYear(), departmentHelper, helper];
+
+    var username = components.join("");
+    let hashedPassword;
+    const newDob = dob.split("-").reverse().join("-");
+
+    hashedPassword = await bcrypt.hash(newDob, 10);
+    var passwordUpdated = false;
+
+    const newFaculty = await new Faculty({
+      name,
+      email,
+      password: hashedPassword,
+      joiningYear,
+      username,
+      department,
+      avatar,
+      contactNumber,
+      dob,
+      gender,
+      designation,
+      passwordUpdated,
+    });
+    await newFaculty.save();
+    return res.status(200).json({
+      success: true,
+      message: "Faculty registerd successfully",
+      response: newFaculty,
+    });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const getFaculty = async (req, res) => {
+  try {
+    const { department } = req.body;
+    const errors = { noFacultyError: String };
+    const faculties = await Faculty.find({ department });
+    if (faculties.length === 0) {
+      errors.noFacultyError = "No Faculty Found";
+      return res.status(404).json(errors);
+    }
+    res.status(200).json({ result: faculties });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const getAllFaculty = async (req, res) => {
+  try {
+    const faculties = await Faculty.find();
+    res.status(200).json(faculties);
+  } catch (error) {
+    console.log("Backend Error", error);
+  }
+};
+
+export const deleteFaculty = async (req, res) => {
+  try {
+    const { facultyId } = req.body;
+
+    await Faculty.findOneAndDelete(facultyId);
+
+    res.status(200).json({ message: "Faculty Deleted" });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};

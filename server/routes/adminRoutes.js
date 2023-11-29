@@ -9,7 +9,11 @@ import {
   updatedPassword,
   addDepartment,
   getAllDepartment,
-  deleteDepartment
+  deleteDepartment,
+  addFaculty,
+  getFaculty,
+  getAllFaculty,
+  deleteFaculty
 } from "../controller/adminController.js";
 const router = express.Router();
 
@@ -23,6 +27,10 @@ router.post("/updatepassword", updatedPassword);
 router.post("/adddepartment", addDepartment);
 router.get("/getalldepartment", getAllDepartment);
 router.post("/deletedepartment", deleteDepartment);
+router.post("/addfaculty", addFaculty);
+router.post("/getfaculty", getFaculty);
+router.get("/getallfaculty", getAllFaculty);
+router.post("/deletefaculty", deleteFaculty);
 
 
 export default router;
