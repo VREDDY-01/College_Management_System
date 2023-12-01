@@ -13,7 +13,15 @@ import {
   addFaculty,
   getFaculty,
   getAllFaculty,
-  deleteFaculty
+  deleteFaculty,
+  addSubject,
+  getSubject,
+  getAllSubject,
+  deleteSubject,
+  addStudent,
+  getStudent,
+  getAllStudent,
+  deleteStudent
 } from "../controller/adminController.js";
 const router = express.Router();
 
@@ -31,6 +39,14 @@ router.post("/addfaculty", addFaculty);
 router.post("/getfaculty", getFaculty);
 router.get("/getallfaculty", getAllFaculty);
 router.post("/deletefaculty", deleteFaculty);
+router.post("/addsubject", addSubject);
+router.post("/getsubject", getSubject);
+router.get("/getallsubject", getAllSubject);
+router.post("/deletesubject", deleteSubject);
+router.post("/addstudent", addStudent);
+router.post("/getstudent", getStudent);
+router.get("/getallstudent", getAllStudent);
+router.post("/deletestudent", deleteStudent);
 
 
 export default router;

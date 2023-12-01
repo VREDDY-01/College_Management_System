@@ -1,6 +1,8 @@
 import Admin from "../models/admin.js";
 import Department from "../models/department.js";
 import Faculty from "../models/faculty.js";
+import Subject from "../models/subject.js";
+import Student from "../models/student.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -356,6 +358,213 @@ export const deleteFaculty = async (req, res) => {
     await Faculty.findOneAndDelete(facultyId);
 
     res.status(200).json({ message: "Faculty Deleted" });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const addSubject = async (req, res) => {
+  try {
+    const { totalLectures, department, subjectCode, subjectName, year } =
+      req.body;
+    const errors = { subjectError: String };
+    const subject = await Subject.findOne({ subjectCode });
+    if (subject) {
+      errors.subjectError = "Given Subject is already added";
+      return res.status(400).json(errors);
+    }
+
+    const newSubject = await new Subject({
+      totalLectures,
+      department,
+      subjectCode,
+      subjectName,
+      year,
+    });
+
+    await newSubject.save();
+    const students = await Student.find({ department, year });
+    if (students.length !== 0) {
+      for (var i = 0; i < students.length; i++) {
+        students[i].subjects.push(newSubject._id);
+        await students[i].save();
+      }
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Subject added successfully",
+      response: newSubject,
+    });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const getSubject = async (req, res) => {
+  try {
+    const { department, year } = req.body;
+
+
+    const subjects = await Subject.find({ department, year });
+    if (subjects.length === 0) {
+      errors.noSubjectError = "No Subject Found";
+      return res.status(404).json(errors);
+    }
+    res.status(200).json({ result: subjects });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const getAllSubject = async (req, res) => {
+  try {
+    const subjects = await Subject.find();
+    res.status(200).json(subjects);
+  } catch (error) {
+    console.log("Backend Error", error);
+  }
+};
+
+export const deleteSubject = async (req, res) => {
+  try {
+    const { subject } = req.body;
+
+    await Subject.findOneAndDelete(subject);
+
+    res.status(200).json({ message: "Subject Deleted" });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const addStudent = async (req, res) => {
+  try {
+    const {
+      name,
+      dob,
+      department,
+      contactNumber,
+      avatar,
+      email,
+      section,
+      gender,
+      batch,
+      fatherName,
+      motherName,
+      fatherContactNumber,
+      motherContactNumber,
+      year,
+    } = req.body;
+    const errors = { emailError: String };
+    const existingStudent = await Student.findOne({ email });
+    if (existingStudent) {
+      errors.emailError = "Email already exists";
+      return res.status(400).json(errors);
+    }
+    const existingDepartment = await Department.findOne({ department });
+    let departmentHelper = existingDepartment.departmentCode;
+
+    const students = await Student.find({ department });
+    let helper;
+    if (students.length < 10) {
+      helper = "00" + students.length.toString();
+    } else if (students.length < 100 && students.length > 9) {
+      helper = "0" + students.length.toString();
+    } else {
+      helper = students.length.toString();
+    }
+    var date = new Date();
+    var components = ["STU", date.getFullYear(), departmentHelper, helper];
+
+    var username = components.join("");
+    let hashedPassword;
+    const newDob = dob.split("-").reverse().join("-");
+
+    hashedPassword = await bcrypt.hash(newDob, 10);
+    var passwordUpdated = false;
+
+    const newStudent = await new Student({
+      name,
+      dob,
+      password: hashedPassword,
+      username,
+      department,
+      contactNumber,
+      avatar,
+      email,
+      section,
+      gender,
+      batch,
+      fatherName,
+      motherName,
+      fatherContactNumber,
+      motherContactNumber,
+      year,
+      passwordUpdated,
+    });
+    await newStudent.save();
+    const subjects = await Subject.find({ department, year });
+    if (subjects.length !== 0) {
+      for (var i = 0; i < subjects.length; i++) {
+        newStudent.subjects.push(subjects[i]._id);
+      }
+    }
+    await newStudent.save();
+    return res.status(200).json({
+      success: true,
+      message: "Student registerd successfully",
+      response: newStudent,
+    });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const getStudent = async (req, res) => {
+  try {
+    const { department, year, section } = req.body;
+    const errors = { noStudentError: String };
+    const students = await Student.find({ department, year });
+
+    if (students.length === 0) {
+      errors.noStudentError = "No Student Found";
+      return res.status(404).json(errors);
+    }
+
+    res.status(200).json({ result: students });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const getAllStudent = async (req, res) => {
+  try {
+    const students = await Student.find();
+    res.status(200).json(students);
+  } catch (error) {
+    console.log("Backend Error", error);
+  }
+};
+
+export const deleteStudent = async (req, res) => {
+  try {
+    const { student } = req.body;
+
+    await Student.findOneAndDelete(student);
+
+    res.status(200).json({ message: "Student Deleted" });
   } catch (error) {
     const errors = { backendError: String };
     errors.backendError = error;
