@@ -9,16 +9,17 @@ import {
   uploadMarks,
   markAttendance,
 } from "../controller/facultyController.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
 router.post("/login", facultyLogin);
-router.post("/updatepassword", updatedPassword);
-router.post("/updateprofile", updateFaculty);
-router.post("/createtest", createTest);
-router.post("/gettest", getTest);
-router.post("/getstudent", getStudent);
-router.post("/uploadmarks", uploadMarks);
-router.post("/markattendance", markAttendance);
+router.post("/updatepassword",auth, updatedPassword);
+router.post("/updateprofile",auth, updateFaculty);
+router.post("/createtest",auth, createTest);
+router.post("/gettest",auth, getTest);
+router.post("/getstudent",auth, getStudent);
+router.post("/uploadmarks",auth, uploadMarks);
+router.post("/markattendance",auth, markAttendance);
 
 export default router;

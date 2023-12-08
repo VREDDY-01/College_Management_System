@@ -1,4 +1,5 @@
 import express from "express";
+import auth from "../middleware/auth.js";
 import {
   adminLogin,
   addAdmin,
@@ -26,27 +27,27 @@ import {
 const router = express.Router();
 
 router.post("/login", adminLogin);
-router.get("/getalladmin",getAllAdmin);
-router.post("/addadmin", addAdmin);
-router.post("/getadmin", getAdmin);
-router.post("/deleteadmin", deleteAdmin);
-router.post("/updateprofile", updateAdmin);
-router.post("/updatepassword", updatedPassword);
-router.post("/adddepartment", addDepartment);
-router.get("/getalldepartment", getAllDepartment);
-router.post("/deletedepartment", deleteDepartment);
-router.post("/addfaculty", addFaculty);
-router.post("/getfaculty", getFaculty);
-router.get("/getallfaculty", getAllFaculty);
-router.post("/deletefaculty", deleteFaculty);
-router.post("/addsubject", addSubject);
-router.post("/getsubject", getSubject);
-router.get("/getallsubject", getAllSubject);
-router.post("/deletesubject", deleteSubject);
-router.post("/addstudent", addStudent);
-router.post("/getstudent", getStudent);
-router.get("/getallstudent", getAllStudent);
-router.post("/deletestudent", deleteStudent);
+router.get("/getalladmin",auth,getAllAdmin);
+router.post("/addadmin", auth , addAdmin);
+router.post("/getadmin", auth , getAdmin);
+router.post("/deleteadmin", auth , deleteAdmin);
+router.post("/updateprofile", auth , updateAdmin);
+router.post("/updatepassword", auth , updatedPassword);
+router.post("/adddepartment", auth , addDepartment);
+router.get("/getalldepartment", auth , getAllDepartment);
+router.post("/deletedepartment", auth , deleteDepartment);
+router.post("/addfaculty", auth , addFaculty);
+router.post("/getfaculty", auth , getFaculty);
+router.get("/getallfaculty", auth , getAllFaculty);
+router.post("/deletefaculty", auth , deleteFaculty);
+router.post("/addsubject", auth , addSubject);
+router.post("/getsubject", auth , getSubject);
+router.get("/getallsubject", auth , getAllSubject);
+router.post("/deletesubject", auth , deleteSubject);
+router.post("/addstudent", auth , addStudent);
+router.post("/getstudent", auth , getStudent);
+router.get("/getallstudent", auth , getAllStudent);
+router.post("/deletestudent", auth , deleteStudent);
 
 
 export default router;
