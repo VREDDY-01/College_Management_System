@@ -41,7 +41,7 @@ export const adminLogin = async (req, res) => {
 
 export const addAdmin = async (req, res) => {
   try {
-    const { name, dob, contactNumber, avatar, email, joiningYear } =
+    const { name, dob, department, contactNumber, avatar, email, joiningYear } =
       req.body;
     const errors = { emailError: String };
     const existingAdmin = await Admin.findOne({ email });
@@ -49,9 +49,9 @@ export const addAdmin = async (req, res) => {
       errors.emailError = "Email already exists";
       return res.status(400).json(errors);
     }
-    // const existingDepartment = await Department.findOne({ department });
-    // let departmentHelper = existingDepartment.departmentCode;
-    const admins = await Admin.find({  });
+    const existingDepartment = await Department.findOne({ department });
+    let departmentHelper = existingDepartment.departmentCode;
+    const admins = await Admin.find({ department });
 
     let helper;
     if (admins.length < 10) {
@@ -62,7 +62,7 @@ export const addAdmin = async (req, res) => {
       helper = admins.length.toString();
     }
     var date = new Date();
-    var components = ["ADM", date.getFullYear(), helper];
+    var components = ["ADM", date.getFullYear(), departmentHelper, helper];
 
     var username = components.join("");
     let hashedPassword;
@@ -76,6 +76,7 @@ export const addAdmin = async (req, res) => {
       password: hashedPassword,
       joiningYear,
       username,
+      department,
       avatar,
       contactNumber,
       dob,
@@ -115,8 +116,13 @@ export const getAdmin = async (req, res) => {
 
 export const deleteAdmin = async (req, res) => {
   try {
-    const admin = req.body;
-    await Admin.findOneAndDelete({ _id: admin.admin });
+    const admins = req.body;
+    const errors = { noAdminError: String };
+    for (var i = 0; i < admins.length; i++) {
+      var admin = admins[i];
+   
+      await Admin.findOneAndDelete({ _id: admin });
+    }
     res.status(200).json({ message: "Admin Deleted" });
   } catch (error) {
     const errors = { backendError: String };
