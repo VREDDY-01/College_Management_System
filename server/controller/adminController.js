@@ -253,7 +253,7 @@ export const deleteDepartment = async (req, res) => {
   try {
     const { department } = req.body;
 
-    await Department.findOneAndDelete(department);
+    await Department.findOneAndDelete({ department });
 
     res.status(200).json({ message: "Department Deleted" });
   } catch (error) {
@@ -359,10 +359,13 @@ export const getAllFaculty = async (req, res) => {
 
 export const deleteFaculty = async (req, res) => {
   try {
-    const { facultyId } = req.body;
-
-    await Faculty.findOneAndDelete(facultyId);
-
+    const faculties = req.body;
+    const errors = { noFacultyError: String };
+    for (var i = 0; i < faculties.length; i++) {
+      var faculty = faculties[i];
+ 
+      await Faculty.findOneAndDelete({ _id: faculty });
+    }
     res.status(200).json({ message: "Faculty Deleted" });
   } catch (error) {
     const errors = { backendError: String };
@@ -439,10 +442,13 @@ export const getAllSubject = async (req, res) => {
 
 export const deleteSubject = async (req, res) => {
   try {
-    const { subject } = req.body;
+    const subjects = req.body;
+    const errors = { noSubjectError: String };
+    for (var i = 0; i < subjects.length; i++) {
+      var subject = subjects[i];
 
-    await Subject.findOneAndDelete(subject);
-
+      await Subject.findOneAndDelete({ _id: subject });
+    }
     res.status(200).json({ message: "Subject Deleted" });
   } catch (error) {
     const errors = { backendError: String };
@@ -566,10 +572,13 @@ export const getAllStudent = async (req, res) => {
 
 export const deleteStudent = async (req, res) => {
   try {
-    const { student } = req.body;
-
-    await Student.findOneAndDelete(student);
-
+    const students = req.body;
+    const errors = { noStudentError: String };
+    for (var i = 0; i < students.length; i++) {
+      var student = students[i];
+   
+      await Student.findOneAndDelete({ _id: student });
+    }
     res.status(200).json({ message: "Student Deleted" });
   } catch (error) {
     const errors = { backendError: String };
