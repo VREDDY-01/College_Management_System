@@ -20,6 +20,8 @@ import {
   GET_ALL_ADMIN,
   GET_ALL_STUDENT,
   GET_ALL_FACULTY,
+  CREATE_NOTICE,
+  GET_NOTICE
 } from "../actionTypes";
 import * as api from "../api";
 
@@ -221,6 +223,25 @@ export const deleteSubject = (formData) => async (dispatch) => {
     await api.deleteSubject(formData);
     alert("Subject Deleted");
     dispatch({ type: DELETE_SUBJECT, payload: true });
+  } catch (error) {
+    dispatch({ type: SET_ERRORS, payload: error.response.data });
+  }
+};
+
+export const createNotice = (formData) => async (dispatch) => {
+  try {
+    await api.createNotice(formData);
+    alert("Notice Created Successfully");
+    dispatch({ type: CREATE_NOTICE, payload: true });
+  } catch (error) {
+    dispatch({ type: SET_ERRORS, payload: error.response.data });
+  }
+};
+
+export const getNotice = (formData) => async (dispatch) => {
+  try {
+    const { data } = await api.getNotice(formData);
+    dispatch({ type: GET_NOTICE, payload: data });
   } catch (error) {
     dispatch({ type: SET_ERRORS, payload: error.response.data });
   }

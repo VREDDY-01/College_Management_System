@@ -3,6 +3,7 @@ import Department from "../models/department.js";
 import Faculty from "../models/faculty.js";
 import Subject from "../models/subject.js";
 import Student from "../models/student.js";
+import Notice from "../models/notice.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -580,6 +581,52 @@ export const deleteStudent = async (req, res) => {
       await Student.findOneAndDelete({ _id: student });
     }
     res.status(200).json({ message: "Student Deleted" });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const createNotice = async (req, res) => {
+  try {
+    const { from, content, topic, date, noticeFor } = req.body;
+
+    const errors = { noticeError: String };
+    const exisitingNotice = await Notice.findOne({ topic, content, date });
+    if (exisitingNotice) {
+      errors.noticeError = "Notice already created";
+      return res.status(400).json(errors);
+    }
+    const newNotice = await new Notice({
+      from,
+      content,
+      topic,
+      noticeFor,
+      date,
+    });
+    await newNotice.save();
+    return res.status(200).json({
+      success: true,
+      message: "Notice created successfully",
+      response: newNotice,
+    });
+  } catch (error) {
+    const errors = { backendError: String };
+    errors.backendError = error;
+    res.status(500).json(errors);
+  }
+};
+
+export const getNotice = async (req, res) => {
+  try {
+    const errors = { noNoticeError: String };
+    const notices = await Notice.find({});
+    if (notices.length === 0) {
+      errors.noNoticeError = "No Notice Found";
+      return res.status(404).json(errors);
+    }
+    res.status(200).json({ result: notices });
   } catch (error) {
     const errors = { backendError: String };
     errors.backendError = error;

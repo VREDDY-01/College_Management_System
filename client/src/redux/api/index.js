@@ -34,3 +34,16 @@ export const deleteStudent = (data) => API.post("/api/admin/deletestudent", data
 export const addSubject = (subject) => API.post("/api/admin/addsubject", subject);
 export const getSubject = (subject) => API.post("/api/admin/getsubject", subject);
 export const deleteSubject = (data) => API.post("/api/admin/deletesubject", data);
+export const createNotice = (notice) => API.post("/api/admin/createnotice", notice);
+export const getNotice = (notice) => API.post("/api/admin/getnotice", notice);
+
+//FACULTY
+
+export const facultySignIn = (formData) => API.post("/api/faculty/login", formData);
+export const facultyUpdatePassword = (updatedPassword) => API.post("/api/faculty/updatepassword", updatedPassword);
+export const updateFaculty = (updatedFaculty) => API.post("/api/faculty/updateprofile", updatedFaculty);
+export const createTest = (test) => API.post("/api/faculty/createtest", test);
+export const getTest = (test) => API.post("/api/faculty/gettest", test);
+export const getMarksStudent = (student) => API.post("/api/faculty/getstudent", student);
+export const uploadMarks = (data) => API.post("/api/faculty/uploadmarks", data);
+export const markAttendance = (data) => API.post("/api/faculty/markattendance", data);

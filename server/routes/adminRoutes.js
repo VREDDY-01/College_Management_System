@@ -22,7 +22,8 @@ import {
   addStudent,
   getStudent,
   getAllStudent,
-  deleteStudent
+  deleteStudent,createNotice,
+  getNotice
 } from "../controller/adminController.js";
 const router = express.Router();
 
@@ -48,6 +49,8 @@ router.post("/addstudent", auth , addStudent);
 router.post("/getstudent", auth , getStudent);
 router.get("/getallstudent", auth , getAllStudent);
 router.post("/deletestudent", auth , deleteStudent);
+router.post("/createnotice", auth, createNotice);
+router.post("/getnotice", auth, getNotice);
 
 
 export default router;

@@ -1,23 +1,29 @@
 import {
-  ADMIN_LOGIN,
-  LOGOUT,
-  GET_ALL_DEPARTMENT,
-  UPDATE_ADMIN,
-  UPDATE_PASSWORD,
   ADD_ADMIN,
-  DELETE_ADMIN,
+  ADD_FACULTY,
+  ADD_STUDENT,
+  ADD_SUBJECT,
+  ADMIN_LOGIN,
+  GET_FACULTY,
+  GET_SUBJECT,
+  LOGOUT,
+  UPDATE_ADMIN,
   GET_STUDENT,
   ADD_DEPARTMENT,
-  DELETE_DEPARTMENT,
-  ADD_FACULTY,
-  GET_FACULTY,
-  DELETE_FACULTY,
-  ADD_SUBJECT,
-  GET_SUBJECT,
-  DELETE_SUBJECT,
-  GET_ALL_ADMIN,
+  GET_ALL_STUDENT,
+  GET_ALL_SUBJECT,
   GET_ALL_FACULTY,
-  GET_ALL_STUDENT
+  GET_ALL_ADMIN,
+  GET_ALL_DEPARTMENT,
+  UPDATE_PASSWORD,
+  GET_ADMIN,
+  DELETE_ADMIN,
+  DELETE_DEPARTMENT,
+  DELETE_FACULTY,
+  DELETE_STUDENT,
+  DELETE_SUBJECT,
+  CREATE_NOTICE,
+  GET_NOTICE,
 } from "../actionTypes";
 
 const initialState = {
@@ -70,48 +76,40 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         adminAdded: action.payload,
       };
-
+    case CREATE_NOTICE:
+      return {
+        ...state,
+        noticeCreated: action.payload,
+      };
     case DELETE_ADMIN:
       return {
         ...state,
         adminDeleted: action.payload,
       };
-    case GET_ALL_FACULTY:
+    case DELETE_DEPARTMENT:
       return {
         ...state,
-        allFaculty: action.payload,
+        departmentDeleted: action.payload,
       };
-    case GET_ALL_ADMIN:
+    case DELETE_FACULTY:
       return {
         ...state,
-        allAdmin: action.payload,
+        facultyDeleted: action.payload,
       };
-    case GET_ALL_STUDENT:
+    case DELETE_STUDENT:
       return {
         ...state,
-        allStudent: action.payload,
+        studentDeleted: action.payload,
       };
-    case GET_ALL_DEPARTMENT:
+    case DELETE_SUBJECT:
       return {
         ...state,
-        allDepartment: action.payload,
-      };
-
-    case GET_STUDENT:
-      return {
-        ...state,
-        students: action.payload,
+        subjectDeleted: action.payload,
       };
     case ADD_DEPARTMENT:
       return {
         ...state,
         departmentAdded: action.payload,
-      };
-
-    case DELETE_DEPARTMENT:
-      return {
-        ...state,
-        departmentDeleted: action.payload,
       };
     case ADD_FACULTY:
       return {
@@ -123,10 +121,30 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         faculties: action.payload,
       };
-    case DELETE_FACULTY:
+    case GET_NOTICE:
       return {
         ...state,
-        facultyDeleted: action.payload,
+        notices: action.payload,
+      };
+    case GET_ADMIN:
+      return {
+        ...state,
+        admins: action.payload,
+      };
+    case GET_ALL_FACULTY:
+      return {
+        ...state,
+        allFaculty: action.payload,
+      };
+    case GET_ALL_ADMIN:
+      return {
+        ...state,
+        allAdmin: action.payload,
+      };
+    case GET_ALL_DEPARTMENT:
+      return {
+        ...state,
+        allDepartment: action.payload,
       };
     case ADD_SUBJECT:
       return {
@@ -138,10 +156,25 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         subjects: action.payload,
       };
-    case DELETE_SUBJECT:
+    case GET_ALL_SUBJECT:
       return {
         ...state,
-        subjectDeleted: action.payload,
+        allSubject: action.payload,
+      };
+    case ADD_STUDENT:
+      return {
+        ...state,
+        studentAdded: action.payload,
+      };
+    case GET_STUDENT:
+      return {
+        ...state,
+        students: action.payload,
+      };
+    case GET_ALL_STUDENT:
+      return {
+        ...state,
+        allStudent: action.payload,
       };
     default:
       return state;
