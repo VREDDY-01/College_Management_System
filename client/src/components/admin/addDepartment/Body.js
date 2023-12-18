@@ -13,6 +13,12 @@ const Body = () => {
   const store = useSelector((state) => state);
   const [error, setError] = useState({});
 
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+    }
+  }, [store.errors]);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setError({});

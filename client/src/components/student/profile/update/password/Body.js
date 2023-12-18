@@ -4,14 +4,15 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Spinner from "../../../../../utils/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { adminUpdatePassword } from "../../../../../redux/actions/adminActions";
 import * as classes from "../../../../../utils/styles";
+import { studentUpdatePassword } from "../../../../../redux/actions/studentActions";
+
 
 const Body = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error,setError] = useState({});
+  const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const store = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const Body = () => {
 
     setLoading(true);
     dispatch(
-      adminUpdatePassword(
+      studentUpdatePassword(
         {
           newPassword: newPassword,
           confirmPassword: confirmPassword,
@@ -132,10 +133,8 @@ const Body = () => {
                 messageColor="#blue"
               />
             )}
-            {(error.mismatchError || error.backendError) && (
-              <p className="text-red-500">
-                {error.mismatchError || error.backendError}
-              </p>
+            {error.mismatchError && (
+              <p className="text-red-500">{error.mismatchError}</p>
             )}
           </form>
         </div>

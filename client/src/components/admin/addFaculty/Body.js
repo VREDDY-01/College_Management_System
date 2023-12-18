@@ -26,6 +26,13 @@ const Body = () => {
     designation: "",
   });
 
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+      setValue({ ...value, email: "" });
+    }
+  }, [store.errors, value]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError({});

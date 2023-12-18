@@ -12,19 +12,19 @@ const Body = () => {
   const [error, setError] = useState({});
   const departments = useSelector((state) => state.admin.allDepartment);
   const [loading, setLoading] = useState(false);
-  // const store = useSelector((state) => state);
+  const store = useSelector((state) => state);
   const [value, setValue] = useState({
     department: "",
     year: "",
   });
   const [search, setSearch] = useState(false);
 
-  // useEffect(() => {
-  //   if (Object.keys(store.errors).length !== 0) {
-  //     setError(store.errors);
-  //     setLoading(false);
-  //   }
-  // }, [store.errors]);
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+      setLoading(false);
+    }
+  }, [store.errors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

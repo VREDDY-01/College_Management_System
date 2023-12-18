@@ -32,3 +32,7 @@ export const ADD_TEST = "ADD_TEST";
 export const GET_TEST = "GET_TEST";
 export const MARKS_UPLOADED = "MARKS_UPLOADED";
 export const ATTENDANCE_MARKED = "ATTENDANCE_MARKED";
+export const TEST_RESULT = "TEST_RESULT";
+export const STUDENT_LOGIN = "STUDENT_LOGIN";
+export const ATTENDANCE = "ATTENDANCE";
+export const UPDATE_STUDENT = "UPDATE_STUDENT";

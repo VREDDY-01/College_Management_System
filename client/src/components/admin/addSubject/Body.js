@@ -21,18 +21,18 @@ const Body = () => {
     department: "",
   });
 
-  // useEffect(() => {
-  //   if (Object.keys(store.errors).length !== 0) {
-  //     setError(store.errors);
-  //     setValue({
-  //       subjectName: "",
-  //       subjectCode: "",
-  //       year: "",
-  //       totalLectures: "",
-  //       department: "",
-  //     });
-  //   }
-  // }, [store.errors]);
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+      setValue({
+        subjectName: "",
+        subjectCode: "",
+        year: "",
+        totalLectures: "",
+        department: "",
+      });
+    }
+  }, [store.errors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

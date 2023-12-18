@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SecurityUpdateIcon from "@mui/icons-material/SecurityUpdate";
 import FileBase from "react-file-base64";
 import { useDispatch, useSelector } from "react-redux";
-import { updateAdmin } from "../../../../redux/actions/adminActions";
+import { updateStudent } from "../../../../redux/actions/studentActions";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useNavigate } from "react-router-dom";
 import { MenuItem, Select } from "@mui/material";
@@ -17,7 +17,7 @@ const Body = () => {
   const store = useSelector((state) => state);
   const departments = useSelector((state) => state.admin.allDepartment);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState({});
+  const [setError] = useState({});
   const [value, setValue] = useState({
     name: "",
     dob: "",
@@ -25,13 +25,19 @@ const Body = () => {
     department: "",
     contactNumber: "",
     avatar: "",
+    batch: "",
+    year: "",
+    motherName: "",
+    fatherName: "",
+    fatherContactNumber: "",
+    section: "",
   });
 
   useEffect(() => {
     if (Object.keys(store.errors).length !== 0) {
       setError(store.errors);
     }
-  }, [store.errors]);
+  }, [setError, store.errors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,16 +48,29 @@ const Body = () => {
       value.dob === "" &&
       value.department === "" &&
       value.contactNumber === "" &&
-      value.avatar === ""
+      value.avatar === "" &&
+      value.batch === "" &&
+      value.year === "" &&
+      value.motherName === "" &&
+      value.fatherName === "" &&
+      value.fatherContactNumber === "" &&
+      value.section === ""
     ) {
       alert("Enter atleast one value");
       setLoading(false);
     } else {
-      dispatch(updateAdmin(value, navigate));
-
+      dispatch(updateStudent(value));
       alert("Kindly login again to see updates");
     }
   };
+
+  useEffect(() => {
+    if (store.errors || store.student.updatedStudent) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [store.errors, store.student.updatedStudent]);
 
   useEffect(() => {
     dispatch({ type: SET_ERRORS, payload: {} });
@@ -67,14 +86,14 @@ const Body = () => {
           </div>
 
           <div
-            onClick={() => navigate("/admin/update/password")}
+            onClick={() => navigate("/student/update/password")}
             className="flex space-x-2 cursor-pointer">
             <VisibilityOffIcon />
             <h1 className="font-bold">Password</h1>
           </div>
         </div>
 
-        <div className=" mr-10 bg-white flex flex-col rounded-xl ">
+        <div className=" mr-10 bg-white flex flex-col rounded-xl overflow-y-scroll h-[27rem] ">
           <form className={classes.adminForm0} onSubmit={handleSubmit}>
             <div className={classes.adminForm1}>
               <div className={classes.adminForm2l}>
@@ -113,6 +132,42 @@ const Body = () => {
                     type="text"
                   />
                 </div>
+                <div className={classes.adminForm3}>
+                  <h1 className={classes.adminLabel}>Batch :</h1>
+                  <input
+                    placeholder={user.result?.batch}
+                    className={classes.adminInput}
+                    value={value.batch}
+                    onChange={(e) =>
+                      setValue({ ...value, batch: e.target.value })
+                    }
+                    type="text"
+                  />
+                </div>
+                <div className={classes.adminForm3}>
+                  <h1 className={classes.adminLabel}>Father's Name :</h1>
+                  <input
+                    placeholder={user.result?.fatherName}
+                    className={classes.adminInput}
+                    value={value.fatherName}
+                    onChange={(e) =>
+                      setValue({ ...value, fatherName: e.target.value })
+                    }
+                    type="text"
+                  />
+                </div>
+                <div className={classes.adminForm3}>
+                  <h1 className={classes.adminLabel}>Mother's Name :</h1>
+                  <input
+                    placeholder={user.result?.motherName}
+                    className={classes.adminInput}
+                    value={value.motherName}
+                    onChange={(e) =>
+                      setValue({ ...value, motherName: e.target.value })
+                    }
+                    type="text"
+                  />
+                </div>
               </div>
 
               <div className={classes.adminForm2r}>
@@ -147,7 +202,47 @@ const Body = () => {
                     }
                   />
                 </div>
-
+                <div className={classes.adminForm3}>
+                  <h1 className={classes.adminLabel}>Year :</h1>
+                  <input
+                    placeholder={user.result?.year}
+                    className={classes.adminInput}
+                    type="text"
+                    value={value.year}
+                    onChange={(e) =>
+                      setValue({ ...value, year: e.target.value })
+                    }
+                  />
+                </div>
+                <div className={classes.adminForm3}>
+                  <h1 className={classes.adminLabel}>Section :</h1>
+                  <input
+                    placeholder={user.result?.section}
+                    className={classes.adminInput}
+                    type="text"
+                    value={value.section}
+                    onChange={(e) =>
+                      setValue({ ...value, section: e.target.value })
+                    }
+                  />
+                </div>
+                <div className={classes.adminForm3}>
+                  <h1 className={classes.adminLabel}>
+                    Father's Contact Number :
+                  </h1>
+                  <input
+                    placeholder={user.result?.fatherContactNumber}
+                    className={classes.adminInput}
+                    value={value.fatherContactNumber}
+                    onChange={(e) =>
+                      setValue({
+                        ...value,
+                        fatherContactNumber: e.target.value,
+                      })
+                    }
+                    type="text"
+                  />
+                </div>
                 <div className={classes.adminForm3}>
                   <h1 className={classes.adminLabel}>Avatar :</h1>
                   <FileBase
@@ -183,9 +278,6 @@ const Body = () => {
                   color="#111111"
                   messageColor="blue"
                 />
-              )}
-              {error.backendError && (
-                <p className="text-red-500">{error.backendError}</p>
               )}
             </div>
           </form>

@@ -20,6 +20,13 @@ const Body = () => {
   });
   const [search, setSearch] = useState(false);
 
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+      setLoading(false);
+    }
+  }, [store.errors]);
+
   const handleInputChange = (e) => {
     const tempCheck = checkedValue;
     let index;

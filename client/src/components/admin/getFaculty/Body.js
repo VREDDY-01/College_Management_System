@@ -14,14 +14,14 @@ const Body = () => {
   const departments = useSelector((state) => state.admin.allDepartment);
   const [search, setSearch] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const store = useSelector((state) => state);
+  const store = useSelector((state) => state);
 
-  // useEffect(() => {
-  //   if (Object.keys(store.errors).length !== 0) {
-  //     setError(store.errors);
-  //     setLoading(false);
-  //   }
-  // }, [store.errors]);
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+      setLoading(false);
+    }
+  }, [store.errors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

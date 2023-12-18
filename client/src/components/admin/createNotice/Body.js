@@ -21,12 +21,13 @@ const Body = () => {
     content: "",
     from: "",
   });
-  // useEffect(() => {
-  //   if (Object.keys(store.errors).length !== 0) {
-  //     setError(store.errors);
-  //     setValue({ date: "", noticeFor: "", topic: "", content: "", from: "" });
-  //   }
-  // }, [store.errors]);
+  
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+      setValue({ date: "", noticeFor: "", topic: "", content: "", from: "" });
+    }
+  }, [store.errors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -20,6 +20,12 @@ const Body = () => {
   const [loading, setLoading] = useState(false);
   const store = useSelector((state) => state);
 
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+      setLoading(false);
+    }
+  }, [store.errors]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -47,3 +47,11 @@ export const getTest = (test) => API.post("/api/faculty/gettest", test);
 export const getMarksStudent = (student) => API.post("/api/faculty/getstudent", student);
 export const uploadMarks = (data) => API.post("/api/faculty/uploadmarks", data);
 export const markAttendance = (data) => API.post("/api/faculty/markattendance", data);
+
+//STUDENT
+
+export const studentSignIn = (formData) => API.post("/api/student/login", formData);
+export const studentUpdatePassword = (updatedPassword) => API.post("/api/student/updatepassword", updatedPassword);
+export const updateStudent = (updatedStudent) => API.post("/api/student/updateprofile", updatedStudent);
+export const getTestResult = (testResult) => API.post("/api/student/testresult", testResult);
+export const getAttendance = (attendance) => API.post("/api/student/attendance", attendance);

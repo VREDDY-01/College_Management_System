@@ -34,13 +34,13 @@ const Body = () => {
     motherContactNumber: "",
   });
 
-  // useEffect(() => {
-  //   if (Object.keys(store.errors).length !== 0) {
-  //     setError(store.errors);
-  //     errorRef.current.scrollIntoView({ behavior: "smooth" });
-  //     setValue({ ...value, email: "" });
-  //   }
-  // }, [store.errors]);
+  useEffect(() => {
+    if (Object.keys(store.errors).length !== 0) {
+      setError(store.errors);
+      errorRef.current.scrollIntoView({ behavior: "smooth" });
+      setValue({ ...value, email: "" });
+    }
+  }, [store.errors, value]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

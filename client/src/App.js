@@ -30,10 +30,17 @@ import CreateTest from "./components/faculty/createTest/CreateTest";
 import MarkAttendance from "./components/faculty/markAttendance/MarkAttendance";
 import UploadMarks from "./components/faculty/uploadMarks/UploadMarks";
 import CreateNotice from "./components/admin/createNotice/CreateNotice";
-
+import StudentLogin from "./components/login/studentLogin/StudentLogin";
+import StudentFirstTimePassword from "./components/student/profile/update/firstTimePassword/FirstTimePassword";
+import StudentHome from "./components/student/StudentHome";
+import StudentProfile from "./components/student/profile/Profile";
+import StudentUpdate from "./components/student/profile/update/Update";
+import StudentPassword from "./components/student/profile/update/password/Password";
+import SubjectList from "./components/student/subjectList/SubjectList";
+import TestResult from "./components/student/testResult/TestResult";
+import Attendance from "./components/student/attendance/Attendance";
 
 import "./index.css";
-
 
 
 const App = () => {
@@ -64,7 +71,7 @@ const App = () => {
 
     {/* FACULTY ROUTES */}
 
-    <Route path="/login/facultylogin" element={<FacultyLogin />} />
+      <Route path="/login/facultylogin" element={<FacultyLogin />} />
       <Route path="/faculty/home" element={<FacultyHome />} />
       <Route path="/faculty/password" element={<FacultyFirstTimePassword />} />
       <Route path="/faculty/profile" element={<FacultyProfile />} />
@@ -73,6 +80,17 @@ const App = () => {
       <Route path="/faculty/createtest" element={<CreateTest />} />
       <Route path="/faculty/uploadmarks" element={<UploadMarks />} />
       <Route path="/faculty/markattendance" element={<MarkAttendance />} />
+
+    {/* STUDENT ROUTES */}
+      <Route path="/login/studentlogin" element={<StudentLogin />} />
+      <Route path="/student/home" element={<StudentHome />} />
+      <Route path="/student/password" element={<StudentFirstTimePassword />} />
+      <Route path="/student/profile" element={<StudentProfile />} />
+      <Route path="/student/update" element={<StudentUpdate />} />
+      <Route path="/student/update/password" element={<StudentPassword />} />
+      <Route path="/student/subjectlist" element={<SubjectList />} />
+      <Route path="/student/testresult" element={<TestResult />} />
+      <Route path="/student/attendance" element={<Attendance />} />
 
     </Routes>
   );
