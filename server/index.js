@@ -3,9 +3,9 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import adminRoutes from "../server/routes/adminRoutes.js";
-import facultyRoutes from "../server/routes/facultyRoutes.js";
-import studentRoutes from "../server/routes/studentRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import facultyRoutes from "./routes/facultyRoutes.js";
+import studentRoutes from "./routes/studentRoutes.js";
 
 
 const app = express();
