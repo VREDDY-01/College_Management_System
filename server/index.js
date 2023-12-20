@@ -18,7 +18,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/faculty", facultyRoutes);
 app.use("/api/student", studentRoutes);
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 app.get("/", (req, res) => {
   res.send("Hello to college erp backend");
 });

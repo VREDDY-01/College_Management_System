@@ -11,7 +11,7 @@ const Header = () => {
   const navigate = useNavigate();
   const logout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate("/login/adminLogin");
+    navigate("/");
   };
   
   return (
