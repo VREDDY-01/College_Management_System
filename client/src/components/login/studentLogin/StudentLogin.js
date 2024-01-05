@@ -73,7 +73,7 @@ const StudentLogin = () => {
                 type="text"
                 required
                 className="bg-[#515966] text-white px-2 outline-none py-2 rounded-lg placeholder:text-sm"
-                placeholder={`Username eg:{username}`}
+                placeholder={`Username eg:${username}`}
               />
             </div>
           </div>
@@ -86,7 +86,7 @@ const StudentLogin = () => {
                 required
                 type={showPassword ? "text" : "password"}
                 className=" bg-[#515966] text-white rounded-lg outline-none py-2  placeholder:text-sm"
-                placeholder={`Password eg:{password}`}
+                placeholder={`Password eg:${password}`}
               />
               {showPassword ? (
                 <VisibilityIcon
