@@ -8,8 +8,8 @@ import { studentSignIn } from "../../../redux/actions/studentActions";
 
 const StudentLogin = () => {
   const [translate, setTranslate] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("STU202302000");
+  const [password, setPassword] = useState("1234");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const StudentLogin = () => {
                 type="text"
                 required
                 className="bg-[#515966] text-white px-2 outline-none py-2 rounded-lg placeholder:text-sm"
-                placeholder="Username"
+                placeholder={`Username eg:{username}`}
               />
             </div>
           </div>
@@ -86,7 +86,7 @@ const StudentLogin = () => {
                 required
                 type={showPassword ? "text" : "password"}
                 className=" bg-[#515966] text-white rounded-lg outline-none py-2  placeholder:text-sm"
-                placeholder="Password"
+                placeholder={`Password eg:{password}`}
               />
               {showPassword ? (
                 <VisibilityIcon
