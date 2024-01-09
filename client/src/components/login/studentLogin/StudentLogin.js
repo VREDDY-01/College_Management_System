@@ -120,9 +120,9 @@ const StudentLogin = () => {
               {error.usernameError || error.passwordError}
             </p>
           )}
-        </form>
-          <p>Login using these credentials: username = STU202302000 - password=1234</p>
+        </form>  
       </div>
+      <p>Login using these credentials: username = STU202302000 - password=1234</p>
     </div>
   );
 };
