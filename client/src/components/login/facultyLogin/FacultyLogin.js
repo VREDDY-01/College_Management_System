@@ -121,8 +121,8 @@ const FacultyLogin = () => {
             </p>
           )}
         </form>
-          <p>Login using these credentials: username = FAC202302000 - password=1234</p>
       </div>
+          <p>Login using these credentials: username = FAC202302000 - password=1234</p>
     </div>
   );
 };
