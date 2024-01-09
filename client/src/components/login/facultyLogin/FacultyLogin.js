@@ -73,7 +73,7 @@ const FacultyLogin = () => {
                 type="text"
                 required
                 className="bg-[#515966] text-white px-2 outline-none py-2 rounded-lg placeholder:text-sm"
-                placeholder={`Username eg:${username}`}
+                placeholder={`Username eg: FAC202302000`}
               />
             </div>
           </div>
@@ -86,7 +86,7 @@ const FacultyLogin = () => {
                 required
                 type={showPassword ? "text" : "password"}
                 className=" bg-[#515966] text-white rounded-lg outline-none py-2  placeholder:text-sm"
-                placeholder={`Password eg:${password}`}
+                placeholder={`Password eg: 1234`}
               />
               {showPassword ? (
                 <VisibilityIcon
@@ -121,6 +121,7 @@ const FacultyLogin = () => {
             </p>
           )}
         </form>
+          <p>Login using these credentials: username = FAC202302000 - password=1234</p>
       </div>
     </div>
   );
